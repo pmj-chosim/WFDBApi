@@ -69,22 +69,22 @@ def csv_to_wfdb(file, record_name, sampling_rate=250):
 def upload_and_convert_csv():
     """CSV 파일을 업로드하고 WFDB로 변환 후 클라이언트에 반환"""
     if 'file' not in request.files:
-        return jsonify({"error": "파일을 찾을 수 없습니다."}), 400
+        return jsonify({"error": "No file uploaded."}), 400
 
     file = request.files['file']
 
     if file.filename == '':
-        return jsonify({"error": "파일 이름이 비어 있습니다."}), 400
+        return jsonify({"error": "Uploaded file has no name."}), 400
 
     if not file.filename.endswith('.csv'):
-        return jsonify({"error": "CSV 파일만 업로드 가능합니다."}), 400
+        return jsonify({"error": "Only CSV files are allowed."}), 400
 
     # 변환 실행
     record_name = os.path.splitext(file.filename)[0] + "_wfdb"
     dat_buffer, hea_buffer = csv_to_wfdb(file, record_name)
 
     return jsonify({
-        "message": f"파일 '{file.filename}'이 변환 완료!",
+        "message": f"파일 '{file.filename}' has been successfully converted!",
         "dat_content": dat_buffer.getvalue().hex(),  # 바이너리 데이터를 16진수로 변환
         "hea_content": hea_buffer.getvalue()
     }), 200
