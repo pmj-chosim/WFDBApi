@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # 컨테이너 실행 시 Flask 서버 시작
-CMD ["python", "server.py"]
+CMD ["python", "app.py"]
